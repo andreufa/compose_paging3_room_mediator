@@ -21,7 +21,7 @@ class SettingsRepositoryImpl(
 ) : SettingsRepository {
     private val REFRESH_PERIOD_KEY = longPreferencesKey("REFRESH_PERIOD")
     private val FIRST_LAUNCH_DELAY_KEY = longPreferencesKey("FIRST_LAUNCH_DELAY")
-    private val _state = MutableStateFlow(SettingContainer.initial)
+    private val _state = MutableStateFlow(IntervalSettings.initial)
     override val state = _state.asStateFlow()
 
     init {
@@ -35,7 +35,7 @@ class SettingsRepositoryImpl(
             dataStore.edit { pref: MutablePreferences ->
                 pref[REFRESH_PERIOD_KEY] = periodic
                 pref[FIRST_LAUNCH_DELAY_KEY] = delayed
-                _state.value = SettingContainer(periodic = periodic, delayed = delayed)
+                _state.value = IntervalSettings(periodic = periodic, delayed = delayed)
             }
         }
     }
@@ -43,9 +43,9 @@ class SettingsRepositoryImpl(
     override suspend fun readSetting() {
         withContext(dispatcher) {
             dataStore.data.collect { pref: Preferences ->
-                val periodic = pref[REFRESH_PERIOD_KEY] ?: SettingContainer.DEFAULT_REFRESH_PERIOD
-                val delayed = pref[FIRST_LAUNCH_DELAY_KEY] ?: SettingContainer.FIST_LAUNCH_DELAY
-                _state.value = SettingContainer(periodic = periodic, delayed = delayed)
+                val periodic = pref[REFRESH_PERIOD_KEY] ?: IntervalSettings.DEFAULT_REFRESH_PERIOD
+                val delayed = pref[FIRST_LAUNCH_DELAY_KEY] ?: IntervalSettings.FIST_LAUNCH_DELAY
+                _state.value = IntervalSettings(periodic = periodic, delayed = delayed)
             }
         }
     }

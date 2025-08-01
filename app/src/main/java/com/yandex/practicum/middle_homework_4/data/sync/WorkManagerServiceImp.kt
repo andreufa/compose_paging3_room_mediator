@@ -1,4 +1,4 @@
-package com.yandex.practicum.middle_homework_4.data.work_manager
+package com.yandex.practicum.middle_homework_4.data.sync
 
 import android.content.ContentValues.TAG
 import android.content.Context
@@ -9,8 +9,8 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.yandex.practicum.middle_homework_4.data.setting_repository.SettingContainer.Companion.DEFAULT_REFRESH_PERIOD
-import com.yandex.practicum.middle_homework_4.data.setting_repository.SettingContainer.Companion.FIST_LAUNCH_DELAY
+import com.yandex.practicum.middle_homework_4.data.setting_repository.IntervalSettings.Companion.DEFAULT_REFRESH_PERIOD
+import com.yandex.practicum.middle_homework_4.data.setting_repository.IntervalSettings.Companion.FIST_LAUNCH_DELAY
 import com.yandex.practicum.middle_homework_4.ui.contract.SettingsRepository
 import com.yandex.practicum.middle_homework_4.ui.contract.WorkManagerService
 import kotlinx.coroutines.CoroutineScope
@@ -51,6 +51,7 @@ class WorkManagerServiceImp(
             TimeUnit.MINUTES
         ).setInitialDelay(duration = delayed, TimeUnit.SECONDS)
             .setConstraints(constraints = networkConstraints)
+            .addTag(REFRESH_WORK_NAME)
             .build()
     }
 
