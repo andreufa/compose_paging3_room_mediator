@@ -23,7 +23,7 @@ class SettingsRepositoryImpl(
 ) : SettingsRepository {
     private val REFRESH_PERIOD_KEY = longPreferencesKey("REFRESH_PERIOD")
     private val FIRST_LAUNCH_DELAY_KEY = longPreferencesKey("FIRST_LAUNCH_DELAY")
-    private val _state = MutableStateFlow(SettingContainer.initial)
+    private val _state = MutableStateFlow(IntervalSettings.initial)
     override val state = _state.asStateFlow()
 
     init {

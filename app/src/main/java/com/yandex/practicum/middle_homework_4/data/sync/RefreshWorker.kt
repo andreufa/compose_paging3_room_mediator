@@ -1,4 +1,4 @@
-package com.yandex.practicum.middle_homework_4.data.work_manager
+package com.yandex.practicum.middle_homework_4.data.sync
 
 
 import android.content.Context

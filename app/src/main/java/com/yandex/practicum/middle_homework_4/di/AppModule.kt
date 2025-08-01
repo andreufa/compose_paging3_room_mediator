@@ -6,11 +6,11 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
 import com.yandex.practicum.middle_homework_4.data.database.NewsDatabase
-import com.yandex.practicum.middle_homework_4.data.news_service.NewsServiceImpl
+import com.yandex.practicum.middle_homework_4.data.source.NewsDataSourceImpl
 import com.yandex.practicum.middle_homework_4.data.setting_repository.SettingsRepositoryImpl
-import com.yandex.practicum.middle_homework_4.data.work_manager.WorkManagerServiceImp
+import com.yandex.practicum.middle_homework_4.data.sync.WorkManagerServiceImp
 import com.yandex.practicum.middle_homework_4.ui.AppViewModel
-import com.yandex.practicum.middle_homework_4.ui.contract.NewsService
+import com.yandex.practicum.middle_homework_4.ui.contract.NewsDataSource
 import com.yandex.practicum.middle_homework_4.ui.contract.SettingsRepository
 import com.yandex.practicum.middle_homework_4.ui.contract.WorkManagerService
 import kotlinx.coroutines.CoroutineScope
@@ -22,8 +22,8 @@ import org.koin.dsl.module
 import java.io.File
 
 val appModule = module {
-    single<NewsService> {
-        NewsServiceImpl(
+    single<NewsDataSource> {
+        NewsDataSourceImpl(
             application = androidContext(),
             fileName = "runews.json"
         )

@@ -1,4 +1,4 @@
-package com.yandex.practicum.middle_homework_4.data.news_service
+package com.yandex.practicum.middle_homework_4.data.source
 
 import com.yandex.practicum.middle_homework_4.data.database.entity.News
 

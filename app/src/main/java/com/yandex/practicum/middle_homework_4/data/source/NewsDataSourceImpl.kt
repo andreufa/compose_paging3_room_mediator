@@ -1,4 +1,4 @@
-package com.yandex.practicum.middle_homework_4.data.news_service
+package com.yandex.practicum.middle_homework_4.data.source
 
 import android.app.Application
 import android.content.ContentValues.TAG
@@ -6,14 +6,14 @@ import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import com.yandex.practicum.middle_homework_4.data.database.entity.News
-import com.yandex.practicum.middle_homework_4.ui.contract.NewsService
+import com.yandex.practicum.middle_homework_4.ui.contract.NewsDataSource
 import kotlin.text.Charsets.UTF_8
 
 
-class NewsServiceImpl(
+class NewsDataSourceImpl(
     application: Context,
     fileName: String
-) : NewsService {
+) : NewsDataSource {
     private var source: List<News>? = null
     private val maxItem = 10
     private val size: Int
@@ -29,7 +29,7 @@ class NewsServiceImpl(
         if (start >= size) return NewsResponse(nextPage = null, news = emptyList())
         if (end > size) end = size - 1
         val responseList = source?.subList(start, end) ?: emptyList()
-        Log.i(TAG, "NewsService loading data : page = $page | data $responseList")
+        Log.i(TAG, "NewsDataSource loading data : page = $page | data $responseList")
         return NewsResponse(nextPage = page + 1, news = responseList)
     }
 

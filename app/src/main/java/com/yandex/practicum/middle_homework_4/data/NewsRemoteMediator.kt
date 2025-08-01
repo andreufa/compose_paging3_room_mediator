@@ -9,14 +9,14 @@ import androidx.room.withTransaction
 import com.yandex.practicum.middle_homework_4.data.database.NewsDatabase
 import com.yandex.practicum.middle_homework_4.data.database.entity.News
 import com.yandex.practicum.middle_homework_4.data.database.entity.RemoteKeys
-import com.yandex.practicum.middle_homework_4.ui.contract.NewsService
+import com.yandex.practicum.middle_homework_4.ui.contract.NewsDataSource
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 
 @OptIn(ExperimentalPagingApi::class)
 class NewsRemoteMediator(
-    private val newsService: NewsService,
+    private val newsDataSource: NewsDataSource,
     private val newsDatabase: NewsDatabase,
 ) : RemoteMediator<Int, News>() {
 
@@ -58,14 +58,13 @@ class NewsRemoteMediator(
         }
 
         try {
-            val apiResponse = newsService.fetchData(page = page)
+            val apiResponse = newsDataSource.fetchData(page = page)
 
             val news = apiResponse.news
             val endOfPaginationReached = news.isEmpty()
 
             newsDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    newsDatabase.getRemoteKeysDao().clearRemoteKeys()
                     newsDatabase.getNewsDao().clearAllNews()
                 }
                 val prevKey = if (page > 1) page - 1 else null
